@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class NosProducteursController extends Controller
 {
     /**
-     * @Route("/nos/producteurs", name="nos_producteurs")
+     * @Route("/nosproducteurs", name="nos_producteurs")
      */
     public function index()
     {

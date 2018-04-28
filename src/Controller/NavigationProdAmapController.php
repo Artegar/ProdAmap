@@ -12,7 +12,7 @@ class NavigationProdAmapController extends Controller
      */
     public function index()
     {
-        return $this->render('navigation_prod_amap/index.html.twig', [
+        return $this->render('navigation_prod_amap/navigation.html.twig', [
             'controller_name' => 'NavigationProdAmapController',
         ]);
     }

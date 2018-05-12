@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -48,6 +50,21 @@ class Producteur
      * @ORM\Column(name="prod_nom_exploit", type="string", length=100, nullable=false)
      */
     private $prodNomExploit;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Produit", mappedBy="prod")
+     */
+    private $produit;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->produit = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getProdId(): ?int
     {
@@ -102,5 +119,32 @@ class Producteur
         return $this;
     }
 
+    /**
+     * @return Collection|Produit[]
+     */
+    public function getProduit(): Collection
+    {
+        return $this->produit;
+    }
+
+    public function addProduit(Produit $produit): self
+    {
+        if (!$this->produit->contains($produit)) {
+            $this->produit[] = $produit;
+            $produit->addProd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduit(Produit $produit): self
+    {
+        if ($this->produit->contains($produit)) {
+            $this->produit->removeElement($produit);
+            $produit->removeProd($this);
+        }
+
+        return $this;
+    }
 
 }

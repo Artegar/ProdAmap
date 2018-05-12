@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Produit
  *
- * @ORM\Table(name="produit", indexes={@ORM\Index(name="FK_produit_prod_id_producteur", columns={"prod_id_producteur"}), @ORM\Index(name="FK_produit_fam_id", columns={"fam_id"})})
+ * @ORM\Table(name="produit", indexes={@ORM\Index(name="FK_produit_fam_id", columns={"fam_id"})})
  * @ORM\Entity
  */
 class Produit
@@ -15,11 +17,11 @@ class Produit
     /**
      * @var int
      *
-     * @ORM\Column(name="prod_id", type="integer", nullable=false)
+     * @ORM\Column(name="produit_id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $prodId;
+    private $produitId;
 
     /**
      * @var string|null
@@ -39,18 +41,31 @@ class Produit
     private $fam;
 
     /**
-     * @var \Producteur
+     * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToOne(targetEntity="Producteur")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="prod_id_producteur", referencedColumnName="prod_id")
-     * })
+     * @ORM\ManyToMany(targetEntity="Producteur", inversedBy="produit")
+     * @ORM\JoinTable(name="produire",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="produit_id", referencedColumnName="produit_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="prod_id", referencedColumnName="prod_id")
+     *   }
+     * )
      */
-    private $prodProducteur;
+    private $prod;
 
-    public function getProdId(): ?int
+    /**
+     * Constructor
+     */
+    public function __construct()
     {
-        return $this->prodId;
+        $this->prod = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function getProduitId(): ?int
+    {
+        return $this->produitId;
     }
 
     public function getProdNom(): ?string
@@ -77,17 +92,30 @@ class Produit
         return $this;
     }
 
-    public function getProdProducteur(): ?Producteur
+    /**
+     * @return Collection|Producteur[]
+     */
+    public function getProd(): Collection
     {
-        return $this->prodProducteur;
+        return $this->prod;
     }
 
-    public function setProdProducteur(?Producteur $prodProducteur): self
+    public function addProd(Producteur $prod): self
     {
-        $this->prodProducteur = $prodProducteur;
+        if (!$this->prod->contains($prod)) {
+            $this->prod[] = $prod;
+        }
 
         return $this;
     }
 
+    public function removeProd(Producteur $prod): self
+    {
+        if ($this->prod->contains($prod)) {
+            $this->prod->removeElement($prod);
+        }
+
+        return $this;
+    }
 
 }

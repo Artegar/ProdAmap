@@ -34,7 +34,7 @@
                 <td>{{ utilisateur.utilPrenom }}</td>
                 <td>{{ utilisateur.utilTel }}</td>
                 <td>{{ utilisateur.utilMail }}</td>
-                <td>{{ utilisateur.utilLogin }}</td>
+               <!--- <td>{{ utilisateur.utilLogin }}</td>
                 <td>{{ utilisateur.utilMdp }}</td>
                 <td>{{ utilisateur.utilActif ? 'Yes' : 'No' }}</td>
                 <td>{{ utilisateur.utilSuperadmin ? 'Yes' : 'No' }}</td>
@@ -43,7 +43,7 @@
                 <td>{{ utilisateur.utilCodepostal }}</td>
                 <td>{{ utilisateur.utilVille }}</td>
                 <td>{{ utilisateur.producteur }}</td>
-                <td>{{ utilisateur.adherant }}</td>
+                <td>{{ utilisateur.adherant }}</td>!--->
                 <td>
                     <a href="{{ path('utilisateur_show', {'utilId': utilisateur.utilId}) }}">show</a>
                     <a href="{{ path('utilisateur_edit', {'utilId': utilisateur.utilId}) }}">edit</a>

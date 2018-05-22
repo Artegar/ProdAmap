@@ -2,11 +2,17 @@
 
 security:
     providers:
-        in_memory:
-            memory:
-                users:
-                    user1:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin1: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+
+        #in_memory:
+            #memory:
+                #users:
+                    #user1:  { password: userpass, roles: [ 'ROLE_USER' ] }
+                    #admin1: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+
+        our_db_provider:
+            entity:
+                class: App\Entity\Utilisateur
+                property: utilLogin
 
     firewalls:
         dev:
@@ -27,4 +33,6 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        #Symfony\Component\Security\Core\User\User: plaintext
+        App\Entity\Utilisateur:
+            algorithm: bcrypt

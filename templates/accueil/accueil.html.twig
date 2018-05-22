@@ -3,6 +3,14 @@
 {% block body %}
 
 <div class="container-fluid">
+	{% if app.user %}
+		{{ dump(app.user) }}
+	{% else %}
+    	# user is not logged in
+ 	{% endif %}
+
+	<p>Username: {{ app.user.username }}</p>
+	</p>
 	<div class="row">
 		<div class="col-lg-2">
 			<img alt="Bootstrap Image Preview" src="http://www.layoutit.com/img/sports-q-c-140-140-3.jpg" />

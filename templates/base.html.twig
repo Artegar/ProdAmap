@@ -14,67 +14,68 @@
 			{% if app.user %}
 				{{ dump(app.user) }}
 			{% else %}
-		    	# user is not logged in
+		    	Non connecté
 		 	{% endif %}
 		</div>
 	</div>
 	<div class="row">
 
-	{% if app.user %}
-		<p>Username: {{ app.user.username }}</p>
-		{% if is_granted('ROLE_ADMIN') %}
-			ADMINISTRATEUR
-
-			Clôturer compte
-			Envoyer notification aux autres amap
-			Créer et voir produits
-			Création contrat
-			Archivage contrat
-			Validation de producteur
-			Notification création réunion
-		{% elseif is_granted('ROLE_ADHERANT') %}
-			ADHERANT
-
-			Modifier ses champs personnels
-			Historique des contrats passés et en cours
-			Voir s’il est trésorier
-		{% elseif is_granted('ROLE_PRODUCTEUR') %}
-			PRODUCTEUR
-
-			Voir liste de produits, enlever ou créer
-			Voir contrats passé et en cours
-			Modifier ses champs personnels
-		{% endif %}
-
-	{% else %}	
-		VISITEUR
-
-		Liste des producteurs
-		Faq
-		Histoire
-		Connection
-		Isncription
-	{% endif %}
-
-
-		<div class="col-lg-12">
+	<div class="col-lg-12">
 			<div class="row">
 				<div class="col-lg-6">
 					<ul class="nav">
-						<li class="nav-item">
-							<a class="nav-link" href="/accueil">Accueil</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/nosproducteurs">Nos Producteurs</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Notre histoire</a>
-						</li>
-					</ul>
-				</div>
+
+	{% if app.user %}
+		{% if is_granted('ROLE_ADMIN') %}
+			<li class="nav-item">
+				<a class="nav-link" href="/produit/voirProduits">Voir les produits</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/contrat/voirTousContrat">Contrats en cours</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/producteurs/voirNouveauxProducteur">Nouveaux producteur</a>
+			</li>
+		{% elseif is_granted('ROLE_ADHERANT') %}
+			<li class="nav-item">
+				<a class="nav-link" href="/contrats/voirSesContrat">Mes contrats</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/contrats/voirSesContrat">Mon compte</a>
+			</li>
+		{% elseif is_granted('ROLE_PRODUCTEUR') %}
+			<li class="nav-item">
+				<a class="nav-link" href="/produits/voirSesProduits">Mes produits</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/contrats/voirSesContrat">Mes contrats</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/contrats/voirSesContrat">Mon compte</a>
+			</li>
+		{% endif %}
+
+	{% else %}	
+		#
+		<li class="nav-item">
+			<a class="nav-link" href="/accueil">Accueil</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="/nosproducteurs">Nos Producteurs</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">Notre histoire</a>
+		</li>
+	{% endif %}
+		</ul>
+	</div>
+
+		
+						
+					
 				<div class="col-lg-6" style="text-align: right;">
 					 
-					<a role="button" class="btn btn-primary active btn-md">
+					<a role="button" class="btn btn-primary active btn-md" href="/security/formConnection">
 						Connexion
 					</a>
 					<a role="button" class="btn btn-primary active btn-md" href="/inscription">

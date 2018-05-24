@@ -10,7 +10,6 @@ class AccueilController extends Controller
 {
     /**
      * @Route("/accueil", name="accueil")
-     * @Security("has_role('ROLE_ADMIN')")
      */
     public function index()
     {

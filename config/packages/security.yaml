@@ -25,8 +25,8 @@ security:
                 login_path: /security/formConnection
                 check_path: /security/checkConnection
             logout:
-                path:   /logout
-                target: /security/formConnection  
+                path:   /security/logout
+                target: /accueil
 
     role_hierarchy:
         ROLE_ADMIN:       [ROLE_USER, ROLE_ADHERANT, ROLE_PRODUCTEUR]

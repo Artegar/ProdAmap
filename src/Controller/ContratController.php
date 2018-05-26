@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Contrat;
-use App\Form\ContratType;
+use App\Form\Contrat1Type;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +32,7 @@ class ContratController extends Controller
     public function new(Request $request): Response
     {
         $contrat = new Contrat();
-        $form = $this->createForm(ContratType::class, $contrat);
+        $form = $this->createForm(Contrat1Type::class, $contrat);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -62,7 +62,7 @@ class ContratController extends Controller
      */
     public function edit(Request $request, Contrat $contrat): Response
     {
-        $form = $this->createForm(ContratType::class, $contrat);
+        $form = $this->createForm(Contrat1Type::class, $contrat);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

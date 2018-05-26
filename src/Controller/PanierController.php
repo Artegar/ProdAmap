@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Panier;
-use App\Form\PanierType;
+use App\Form\Panier1Type;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +32,7 @@ class PanierController extends Controller
     public function new(Request $request): Response
     {
         $panier = new Panier();
-        $form = $this->createForm(PanierType::class, $panier);
+        $form = $this->createForm(Panier1Type::class, $panier);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -62,7 +62,7 @@ class PanierController extends Controller
      */
     public function edit(Request $request, Panier $panier): Response
     {
-        $form = $this->createForm(PanierType::class, $panier);
+        $form = $this->createForm(Panier1Type::class, $panier);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

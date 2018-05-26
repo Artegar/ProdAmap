@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Adherant;
-use App\Form\AdherantType;
+use App\Form\Adherant1Type;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +32,7 @@ class AdherantController extends Controller
     public function new(Request $request): Response
     {
         $adherant = new Adherant();
-        $form = $this->createForm(AdherantType::class, $adherant);
+        $form = $this->createForm(Adherant1Type::class, $adherant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -62,7 +62,7 @@ class AdherantController extends Controller
      */
     public function edit(Request $request, Adherant $adherant): Response
     {
-        $form = $this->createForm(AdherantType::class, $adherant);
+        $form = $this->createForm(Adherant1Type::class, $adherant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

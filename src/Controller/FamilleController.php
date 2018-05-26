@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Famille;
-use App\Form\FamilleType;
+use App\Form\Famille1Type;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +32,7 @@ class FamilleController extends Controller
     public function new(Request $request): Response
     {
         $famille = new Famille();
-        $form = $this->createForm(FamilleType::class, $famille);
+        $form = $this->createForm(Famille1Type::class, $famille);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -62,7 +62,7 @@ class FamilleController extends Controller
      */
     public function edit(Request $request, Famille $famille): Response
     {
-        $form = $this->createForm(FamilleType::class, $famille);
+        $form = $this->createForm(Famille1Type::class, $famille);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

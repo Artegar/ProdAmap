@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Utilisateur
@@ -11,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="utilisateur")
  * @ORM\Entity
  */
-class Utilisateur implements UserInterface
+class Utilisateur
 {
     /**
      * @var int
@@ -107,9 +106,9 @@ class Utilisateur implements UserInterface
     private $utilVille;
 
     /**
-     * @var int
+     * @var int|null
      *
-     * @ORM\Column(name="producteur", type="integer", nullable=false)
+     * @ORM\Column(name="producteur", type="integer", nullable=true)
      */
     private $producteur;
 
@@ -169,6 +168,30 @@ class Utilisateur implements UserInterface
     public function setUtilMail(string $utilMail): self
     {
         $this->utilMail = $utilMail;
+
+        return $this;
+    }
+
+    public function getUtilLogin(): ?string
+    {
+        return $this->utilLogin;
+    }
+
+    public function setUtilLogin(string $utilLogin): self
+    {
+        $this->utilLogin = $utilLogin;
+
+        return $this;
+    }
+
+    public function getUtilMdp(): ?string
+    {
+        return $this->utilMdp;
+    }
+
+    public function setUtilMdp(string $utilMdp): self
+    {
+        $this->utilMdp = $utilMdp;
 
         return $this;
     }
@@ -250,7 +273,7 @@ class Utilisateur implements UserInterface
         return $this->producteur;
     }
 
-    public function setProducteur(int $producteur): self
+    public function setProducteur(?int $producteur): self
     {
         $this->producteur = $producteur;
 
@@ -270,84 +293,4 @@ class Utilisateur implements UserInterface
     }
 
 
-
-
-    public function getSalt()
-    {
-        // you *may* need a real salt depending on your encoder
-        // see section on salt below
-        return null;
-    }
-
-    public function getRoles()
-    {
-        if ($this->getUtilSuperadmin())
-        {
-            return array('ROLE_ADMIN');
-        }
-
-        if (!is_null($this->getProducteur()))
-        {
-            return array('ROLE_PRODUCTEUR');
-        }
-
-        if (!is_null($this->getAdherant()))
-        {
-            return array('ROLE_ADHERANT');
-        }
-
-        return array('ROLE_VISITEUR');
-    }
-
-    public function eraseCredentials()
-    {
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->utilMdp;
-    }
-
-    public function setPassword(string $utilMdp): self
-    {
-        $this->utilMdp = $utilMdp;
-
-        return $this;
-    }
-
-    public function getUsername(): ?string
-    {
-        return $this->utilLogin;
-    }
-
-    public function setUsername(string $utilLogin): self
-    {
-        $this->utilLogin = $utilLogin;
-
-        return $this;
-    }
-
-    public function getUtilLogin(): ?string
-    {
-        return $this->utilLogin;
-    }
-
-    public function setUtilLogin(string $utilLogin): self
-    {
-        $this->utilLogin = $utilLogin;
-
-        return $this;
-    }
-
-    public function getUtilMdp(): ?string
-    {
-        return $this->utilMdp;
-    }
-
-    public function setUtilMdp(string $utilMdp): self
-    {
-        $this->utilMdp = $utilMdp;
-
-        return $this;
-    }
 }

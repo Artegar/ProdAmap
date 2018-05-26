@@ -3,9 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
-use App\Entity\Producteur;
-use App\Form\UtilisateurType;
-use App\Entity\producteurUtilisateur;
+use App\Form\Utilisateur1Type;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,8 +20,8 @@ class UtilisateurController extends Controller
     public function index(): Response
     {
         $utilisateurs = $this->getDoctrine()
-        ->getRepository(Utilisateur::class)
-        ->findAll();
+            ->getRepository(Utilisateur::class)
+            ->findAll();
 
         return $this->render('utilisateur/index.html.twig', ['utilisateurs' => $utilisateurs]);
     }
@@ -34,7 +32,7 @@ class UtilisateurController extends Controller
     public function new(Request $request): Response
     {
         $utilisateur = new Utilisateur();
-        $form = $this->createForm(UtilisateurType::class, $utilisateur);
+        $form = $this->createForm(Utilisateur1Type::class, $utilisateur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -56,18 +54,7 @@ class UtilisateurController extends Controller
      */
     public function show(Utilisateur $utilisateur): Response
     {
-        $unProducteur = new producteurUtilisateur();
-
-        $unProducteur->setUtilID($utilisateur->getutilID());        
-        $unProducteur->setName($utilisateur->getutilNom());
-        $unProducteur->setPhone($utilisateur->getutilTel());
-
-        if ($utilisateur->getProducteur()!=NULL) {
-
-            $producteur = self::getProducteurProfil($utilisateur);
-            $unProducteur->setNamePro($producteur->getProdNomExploit());
-        }
-        return $this->render('utilisateur/show.html.twig', ['utilisateur' => $unProducteur]);
+        return $this->render('utilisateur/show.html.twig', ['utilisateur' => $utilisateur]);
     }
 
     /**
@@ -75,7 +62,7 @@ class UtilisateurController extends Controller
      */
     public function edit(Request $request, Utilisateur $utilisateur): Response
     {
-        $form = $this->createForm(UtilisateurType::class, $utilisateur);
+        $form = $this->createForm(Utilisateur1Type::class, $utilisateur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -103,13 +90,4 @@ class UtilisateurController extends Controller
 
         return $this->redirectToRoute('utilisateur_index');
     }
-
-    public function getProducteurProfil($utilisateur){
-      $producteur = $this->getDoctrine()
-      ->getRepository(Producteur::class)
-      ->find($utilisateur->getProducteur());
-
-      return $producteur;
-
-  }
 }

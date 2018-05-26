@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Amap;
-use App\Form\AmapType;
+use App\Form\Amap1Type;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +32,7 @@ class AmapController extends Controller
     public function new(Request $request): Response
     {
         $amap = new Amap();
-        $form = $this->createForm(AmapType::class, $amap);
+        $form = $this->createForm(Amap1Type::class, $amap);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -62,7 +62,7 @@ class AmapController extends Controller
      */
     public function edit(Request $request, Amap $amap): Response
     {
-        $form = $this->createForm(AmapType::class, $amap);
+        $form = $this->createForm(Amap1Type::class, $amap);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -2,14 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Produit
  *
- * @ORM\Table(name="produit", indexes={@ORM\Index(name="FK_produit_fam_id", columns={"fam_id"})})
+ * @ORM\Table(name="produit", indexes={@ORM\Index(name="produit_famille_FK", columns={"fam_id"}), @ORM\Index(name="produit_utilisateur0_FK", columns={"util_id"})})
  * @ORM\Entity
  */
 class Produit
@@ -41,27 +39,14 @@ class Produit
     private $fam;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Utilisateur
      *
-     * @ORM\ManyToMany(targetEntity="Producteur", inversedBy="produit")
-     * @ORM\JoinTable(name="produire",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="produit_id", referencedColumnName="produit_id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="prod_id", referencedColumnName="prod_id")
-     *   }
-     * )
+     * @ORM\ManyToOne(targetEntity="Utilisateur")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="util_id", referencedColumnName="util_id")
+     * })
      */
-    private $prod;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->prod = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    private $util;
 
     public function getProduitId(): ?int
     {
@@ -92,30 +77,17 @@ class Produit
         return $this;
     }
 
-    /**
-     * @return Collection|Producteur[]
-     */
-    public function getProd(): Collection
+    public function getUtil(): ?Utilisateur
     {
-        return $this->prod;
+        return $this->util;
     }
 
-    public function addProd(Producteur $prod): self
+    public function setUtil(?Utilisateur $util): self
     {
-        if (!$this->prod->contains($prod)) {
-            $this->prod[] = $prod;
-        }
+        $this->util = $util;
 
         return $this;
     }
 
-    public function removeProd(Producteur $prod): self
-    {
-        if ($this->prod->contains($prod)) {
-            $this->prod->removeElement($prod);
-        }
-
-        return $this;
-    }
 
 }

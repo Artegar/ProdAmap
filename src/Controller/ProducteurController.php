@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Producteur;
-use App\Form\ProducteurType;
+use App\Form\Producteur1Type;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +32,7 @@ class ProducteurController extends Controller
     public function new(Request $request): Response
     {
         $producteur = new Producteur();
-        $form = $this->createForm(ProducteurType::class, $producteur);
+        $form = $this->createForm(Producteur1Type::class, $producteur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -62,7 +62,7 @@ class ProducteurController extends Controller
      */
     public function edit(Request $request, Producteur $producteur): Response
     {
-        $form = $this->createForm(ProducteurType::class, $producteur);
+        $form = $this->createForm(Producteur1Type::class, $producteur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -2,14 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Producteur
  *
- * @ORM\Table(name="producteur")
+ * @ORM\Table(name="producteur", indexes={@ORM\Index(name="producteur_produit_FK", columns={"produit_id"})})
  * @ORM\Entity
  */
 class Producteur
@@ -52,19 +50,14 @@ class Producteur
     private $prodNomExploit;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Produit
      *
-     * @ORM\ManyToMany(targetEntity="Produit", mappedBy="prod")
+     * @ORM\ManyToOne(targetEntity="Produit")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="produit_id", referencedColumnName="produit_id")
+     * })
      */
     private $produit;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->produit = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     public function getProdId(): ?int
     {
@@ -119,32 +112,17 @@ class Producteur
         return $this;
     }
 
-    /**
-     * @return Collection|Produit[]
-     */
-    public function getProduit(): Collection
+    public function getProduit(): ?Produit
     {
         return $this->produit;
     }
 
-    public function addProduit(Produit $produit): self
+    public function setProduit(?Produit $produit): self
     {
-        if (!$this->produit->contains($produit)) {
-            $this->produit[] = $produit;
-            $produit->addProd($this);
-        }
+        $this->produit = $produit;
 
         return $this;
     }
 
-    public function removeProduit(Produit $produit): self
-    {
-        if ($this->produit->contains($produit)) {
-            $this->produit->removeElement($produit);
-            $produit->removeProd($this);
-        }
-
-        return $this;
-    }
 
 }

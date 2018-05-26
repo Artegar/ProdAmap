@@ -326,4 +326,28 @@ class Utilisateur implements UserInterface
 
         return $this;
     }
+
+    public function getUtilLogin(): ?string
+    {
+        return $this->utilLogin;
+    }
+
+    public function setUtilLogin(string $utilLogin): self
+    {
+        $this->utilLogin = $utilLogin;
+
+        return $this;
+    }
+
+    public function getUtilMdp(): ?string
+    {
+        return $this->utilMdp;
+    }
+
+    public function setUtilMdp(string $utilMdp): self
+    {
+        $this->utilMdp = $utilMdp;
+
+        return $this;
+    }
 }

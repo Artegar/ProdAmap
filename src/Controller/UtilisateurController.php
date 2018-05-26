@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+use App\Entity\Producteur;
 use App\Form\UtilisateurType;
+use App\Entity\producteurUtilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,8 +22,8 @@ class UtilisateurController extends Controller
     public function index(): Response
     {
         $utilisateurs = $this->getDoctrine()
-            ->getRepository(Utilisateur::class)
-            ->findAll();
+        ->getRepository(Utilisateur::class)
+        ->findAll();
 
         return $this->render('utilisateur/index.html.twig', ['utilisateurs' => $utilisateurs]);
     }
@@ -54,7 +56,18 @@ class UtilisateurController extends Controller
      */
     public function show(Utilisateur $utilisateur): Response
     {
-        return $this->render('utilisateur/show.html.twig', ['utilisateur' => $utilisateur]);
+        $unProducteur = new producteurUtilisateur();
+
+        $unProducteur->setUtilID($utilisateur->getutilID());        
+        $unProducteur->setName($utilisateur->getutilNom());
+        $unProducteur->setPhone($utilisateur->getutilTel());
+
+        if ($utilisateur->getProducteur()!=NULL) {
+
+            $producteur = self::getProducteurProfil($utilisateur);
+            $unProducteur->setNamePro($producteur->getProdNomExploit());
+        }
+        return $this->render('utilisateur/show.html.twig', ['utilisateur' => $unProducteur]);
     }
 
     /**
@@ -90,4 +103,13 @@ class UtilisateurController extends Controller
 
         return $this->redirectToRoute('utilisateur_index');
     }
+
+    public function getProducteurProfil($utilisateur){
+      $producteur = $this->getDoctrine()
+      ->getRepository(Producteur::class)
+      ->find($utilisateur->getProducteur());
+
+      return $producteur;
+
+  }
 }
